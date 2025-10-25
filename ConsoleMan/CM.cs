@@ -65,6 +65,11 @@ public static class CM
                 Console.Write(text);
         }
     }
+    /// <summary>
+    /// Writes a string to the console.
+    /// </summary>
+    /// <param name="s">String to write.</param>
+    public static void Write(string? s) => Console.Write(s);
 
     /// <summary>
     /// Writes a newline to the console.
@@ -82,6 +87,12 @@ public static class CM
         Write(values);
         Console.WriteLine();
     }
+    /// <summary>
+    /// Writes a string to the console followed by a newline.
+    /// </summary>
+    /// <param name="s">String to write.</param>
+    public static void WriteLine(string? s) => Console.WriteLine(s);
+
     /// <summary>
     /// Writes a two-column key/value table to the console.
     /// </summary>
