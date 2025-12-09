@@ -52,18 +52,20 @@ public static class CM
     /// Writes spans of optionally colored text to the console.
     /// </summary>
     /// <param name="values">Text spans to write.</param>
+    public static void Write(params ReadOnlySpan<TextSpan> values)
+    {
+        foreach (var span in values)
+            Write(span);
+    }
+    /// <summary>
+    /// Writes spans of optionally colored text to the console.
+    /// </summary>
+    /// <param name="values">Text spans to write.</param>
     /// <exception cref="ArgumentNullException"><paramref name="values"/> is null.</exception>
     public static void Write(params TextSpan[] values)
     {
         ArgumentNullException.ThrowIfNull(values);
-
-        foreach (var (text, color) in values)
-        {
-            if (color.HasValue)
-                Write(color.GetValueOrDefault(), text);
-            else
-                Console.Write(text);
-        }
+        Write(values.AsSpan());
     }
     /// <summary>
     /// Writes a string to the console.
@@ -71,10 +73,27 @@ public static class CM
     /// <param name="s">String to write.</param>
     public static void Write(string? s) => Console.Write(s);
 
+    public static void Write(TextSpan span)
+    {
+        if (span.TryGetColor(out var color))
+            Write(color, span.Text);
+        else
+            Console.Write(span.Text);
+    }
+
     /// <summary>
     /// Writes a newline to the console.
     /// </summary>
     public static void WriteLine() => Console.WriteLine();
+    /// <summary>
+    /// Writes spans of optionally colored text to the console followed by a newline.
+    /// </summary>
+    /// <param name="values">Text spans to write.</param>
+    public static void WriteLine(params ReadOnlySpan<TextSpan> values)
+    {
+        Write(values);
+        Console.WriteLine();
+    }
     /// <summary>
     /// Writes spans of optionally colored text to the console followed by a newline.
     /// </summary>
